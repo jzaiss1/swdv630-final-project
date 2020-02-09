@@ -1,4 +1,4 @@
-# Docs for Final Project
+# Tools for Final Project
 
 John Zaiss (GitHub id jzaiss1)
 
