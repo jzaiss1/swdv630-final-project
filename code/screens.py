@@ -39,10 +39,26 @@ class Screen():
         return choice.lower()       
       print("'{}' is an invalid choice".format(choice))
 
+def loadScreens(fileName):
+  screens = {}
+  screenFile = open(fileName, 'r')
+  reader = csv.reader(screenFile)
+  for row in reader:
+    s = Screen(row[1],row[2])
+    screens[row[0]] = s
+  return screens
+
+def printAllScreens(screens):
+  for k,v in screens.items():
+    print(k)
+    v.printScreen()
+
 def main():
-    screen = Screen('PoS Main', 'data/main.screen')
-    screen.printScreen()
-    validChoice = screen.getValidChoice()
-    print("You chose: {}".format(validChoice))
-    
+  screens = loadScreens('data/screens.screen')
+  printAllScreens(screens)
+    # screen = Screen('PoS Main', 'data/main.screen')
+    # screen.printScreen()
+    # validChoice = screen.getValidChoice()
+    # print("You chose: {}".format(validChoice))
+
 main()
