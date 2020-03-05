@@ -1,0 +1,4 @@
+open,Open a new sales ticket
+add,Add an item to an order
+rem,Remove an item from the order
+fin,Complete an order

@@ -1,0 +1,5 @@
+add,Add a vendor
+item,Add an item to inventory
+pri,Update a price
+pinv,Print inventory report
+uinv,Update inventory

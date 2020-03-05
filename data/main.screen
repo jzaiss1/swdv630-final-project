@@ -1,3 +1,4 @@
 in,Login to the System
 out,Log out of the system
 pass,Change password
+quit,Exit the system
