@@ -55,9 +55,9 @@ class Sale:
   def iterator(self):
     return OrderIterator(self.items)
 
-def main():
+def loadItemsDB():
   print('\nUsing SQLAlchemy version {}\n'.format(sqlalchemy.__version__))
-  engine = create_engine('sqlite:///:memory:', echo=False)
+  engine = create_engine('sqlite:///:memory:', echo=True)
 
   Base.metadata.create_all(engine)
 
@@ -207,7 +207,8 @@ def main():
     Item('2017-03-28 00:00:00','iPhone 5s Case',1,1.25)])
   session.commit()
 
-  for row in session.query(Item).all():
-    print('{3:}, {}'.format(row.id, row.name))
+  return session
 
-main()
+def itemLookup(session,id):
+  record = session.query(Item).filter(Item.id == 50).all()
+  return record[0].name, record[0].price

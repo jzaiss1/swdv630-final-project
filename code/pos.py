@@ -1,12 +1,19 @@
 from employees import *
 from screens import *
+from itemsDB import *
 
 # Use to simulate logging in
 PASSWORD = 'pass'
 
+def login(employees, id):
+  return employee
+
 def main():
+  itemsDB = loadItemsDB()
+  itemName, itemPrice = itemLookup(itemsDB,50)
+  print(itemName, itemPrice)
+
   screens = loadScreens('data/screens.screen')
-  #me = Cashier('Elvis Presley')
   employees = loadEmployees()
   me = employees[0]
   print(me.id, me.access)
@@ -16,10 +23,5 @@ def main():
   
   if validChoice == 'in':
     loadScreen(screens,me.access)
-  #printAllScreens(screens)
-    # screen = Screen('PoS Main', 'data/main.screen')
-    # screen.printScreen()
-    # validChoice = screen.getValidChoice()
-    # print("You chose: {}".format(validChoice))
 
 main()
