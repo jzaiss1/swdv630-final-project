@@ -1,5 +1,6 @@
 # Simple menu class to display functions available for various operations
 import csv
+import os
 
 class Screen():
   def __init__(self, title, fileName):
@@ -25,7 +26,8 @@ class Screen():
     return kwargs
 
   def printScreen(self):
-    print("****** {} ******".format(self.title))
+    os.system('clear')
+    print("********** {} **********".format(self.title))
     for k,v in self.dict.items():
       print("{:<8}{}".format(k,v))
 
@@ -53,12 +55,5 @@ def printAllScreens(screens):
     print(k)
     v.printScreen()
 
-def main():
-  screens = loadScreens('data/screens.screen')
-  printAllScreens(screens)
-    # screen = Screen('PoS Main', 'data/main.screen')
-    # screen.printScreen()
-    # validChoice = screen.getValidChoice()
-    # print("You chose: {}".format(validChoice))
-
-main()
+def loadScreen(screens,access):
+  screens[access].printScreen()
