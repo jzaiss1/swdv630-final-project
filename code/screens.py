@@ -59,5 +59,5 @@ def printAllScreens(screens):
     print(k)
     v.printScreen()
 
-def loadScreen(screens,access):
-  screens[access].printScreen()
+def loadScreen(screens,module):
+  screens[module].printScreen()

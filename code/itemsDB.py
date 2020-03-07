@@ -56,9 +56,16 @@ class Sale:
   def iterator(self):
     return OrderIterator(self.items)
 
+class LineItem:
+  def __init__(self,id,name,price,quantity):
+    self.id = id
+    self.name = name
+    self.price = price
+    self.quantity = quantity
+
 def loadItemsDB():
   print('\nUsing SQLAlchemy version {}\n'.format(sqlalchemy.__version__))
-  engine = create_engine('sqlite:///:memory:', echo=True)
+  engine = create_engine('sqlite:///:memory:', echo=False)
 
   Base.metadata.create_all(engine)
 
@@ -211,5 +218,5 @@ def loadItemsDB():
   return session
 
 def itemLookup(session,id):
-  record = session.query(Item).filter(Item.id == 50).all()
+  record = session.query(Item).filter(Item.id == id).all()
   return record[0].name, record[0].price
