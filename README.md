@@ -38,6 +38,9 @@ quit    Exit the system
 
 Please enter your choice:
 ```
+
+### Logging In
+
 By selecting the `in` option we simulate a login of a cashier by statically assigning `employee[0]` as the logged in user.  Upon successful login the user is displayed a screen with functions based on their access.  See the screen below for a successful cashier logon.
 ```
 *** elv-411 logged in as cashier ***
@@ -53,6 +56,9 @@ out     Log out of the system
 
 Please enter your choice:
 ```
+
+### Starting an order
+
 By selecting `open` a new sales ticket is opened and the screen is updated to show the new empty sales order.
 ```
 *** elv-411 logged in as cashier ***
@@ -72,6 +78,9 @@ out     Log out of the system
 
 Please enter your choice:
 ```
+
+### Adding items
+
 Once a ticket is open then items are added to the order by selecting the `add` function.  The range of valid item id's are displayed and the cashier is prompted for the ide of an item.
 ```
  *** elv-411 logged in as cashier ***
@@ -122,6 +131,9 @@ out     Log out of the system
 
 Please enter your choice:
 ```
+
+### Removing items
+
 Select `rem` to remove the last item from the order
 ```
 *** elv-411 logged in as cashier ***
@@ -150,6 +162,9 @@ out     Log out of the system
 
 Please enter your choice:
 ```
+
+### Completing the sale
+
 To complete the order and checkout choose the `fin` option to bring up the checkout screen
 ```
 *** elv-411 logged in as cashier ***
@@ -191,6 +206,9 @@ out     Log out of the system
 
 Please enter your choice:
 ```
+
+### Logging out
+
 By selecting the `out` option the cashier is logged out and the system is returned to the main screen
 ```
 elv-411 logged out
