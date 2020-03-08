@@ -38,3 +38,48 @@ quit    Exit the system
 
 Please enter your choice:
 ```
+By selecting the `in` option we simulate a login of a cashier by statically assigning `employee[0]` as the logged in user.  Upon successful login the user is displayed a screen with functions based on their access.  See the screen below for a successful cashier logon.
+```
+*** elv-411 logged in as cashier ***
+
+********** Order entry **********
+open    Open a new sales ticket
+add     Add an item to an order
+rem     Remove an item from the order
+rev     Review total order
+fin     Complete an order
+out     Log out of the system
+*********************************
+
+Please enter your choice:
+```
+By selecting `open` a new sales ticket is opened and the screen is updated to show the new empty sales order.
+```
+*** elv-411 logged in as cashier ***
+
+********************* Sale VGK091 **********************
+ ID Item                                      Qty  Price
+--------------------------------------------------------
+
+********** Order entry **********
+open    Open a new sales ticket
+add     Add an item to an order
+rem     Remove an item from the order
+rev     Review total order
+fin     Complete an order
+out     Log out of the system
+*********************************
+
+Please enter your choice:
+```
+Once a ticket is open then items are added to the order by selecting the `add` function.  The range of valid item id's are displayed and the cashier is prompted for the ide of an item.
+```
+ *** elv-411 logged in as cashier ***
+
+********************* Sale VGK091 **********************
+ ID Item                                      Qty  Price
+--------------------------------------------------------
+
+Item ids are 1 to 140
+Enter item id or 0 to exit
+```
