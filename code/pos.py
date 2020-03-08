@@ -25,8 +25,8 @@ def processChoice(screens,choice,**kwargs):
     print('Opening a ticket')
     # Call adding to an order function
     loadScreen(screens,module)
-    kwargs['order'] = 'abc123'
-    kwargs[kwargs['order']] = []
+    kwargs['sale'] = 'abc123'
+    kwargs[kwargs['sale']] = []
     return screen, module, kwargs
 
   if choice == 'add':
@@ -34,7 +34,7 @@ def processChoice(screens,choice,**kwargs):
     while (id != 0):
       itemName, itemPrice = itemLookup(kwargs['db'],id)
       lineItem = LineItem(id,itemName,itemPrice,1)
-      kwargs[kwargs['order']].append(lineItem)
+      kwargs[kwargs['sale']].append(lineItem)
       os.system('clear')
       printOrder(**kwargs)
       id = int(input("Enter item id or 0 to exit "))
@@ -46,15 +46,15 @@ def processChoice(screens,choice,**kwargs):
     return screen, module, kwargs
     
 def printOrder(**kwargs):
-  print("********************* Order {} *********************".format(kwargs['order']))
+  print("********************* Sale {} *********************".format(kwargs['sale']))
   print('{:>3} {:<40}  {}  {}'.format(' ID','Item','Qty','Price'))
   print("--------------------------------------------------------")
   total = 0
-  for lineItem in kwargs[kwargs['order']]:
+  for lineItem in kwargs[kwargs['sale']]:
     total += lineItem.quantity * lineItem.price
     print('{:3} {:<40} {:3}  ${:5.2f}'.format(lineItem.id,lineItem.name,lineItem.quantity,lineItem.price))
   print("--------------------------------------------------------")
-  print('Order {} Total {:>30} {:6.2f}'.format(kwargs['order'], '$', total))
+  print('Sale {} Total {:>30} {:6.2f}'.format(kwargs['sale'], '$', total))
   print("========================================================\n")
 
 def main():

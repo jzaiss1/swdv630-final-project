@@ -19,7 +19,7 @@ class Item(Base):
     self.cost = 0
     # TODO: Increment the quantity
 
-  __tablename__ = 'inventory'
+  __tablename__ = 'stock'
 
   id = Column(Integer, primary_key=True)
   name = Column(String)
@@ -51,7 +51,10 @@ class Sale:
     self.items = []
 
   def createId(self):
-    pass
+    num = ''.join(random.choice(string.digits) for i in range(3))
+    alpha = ''.join(random.choice(string.letters) for i in range(3))
+    id = alpha.upper() + num
+    return id
   
   def add(self, item):
     self.items.append(item)

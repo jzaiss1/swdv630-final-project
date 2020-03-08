@@ -59,8 +59,8 @@ class Account():
     else:
       print('invalid password try again')
 
-  def login(self,pass):
-    if self.pass = pass:
+  def login(self,password):
+    if self.password == password:
       return True
     else:
       print('Wrong Password')
