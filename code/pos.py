@@ -54,10 +54,10 @@ def printOrder(**kwargs):
     total += lineItem.quantity * lineItem.price
     print('{:3} {:<40} {:3}  ${:5.2f}'.format(lineItem.id,lineItem.name,lineItem.quantity,lineItem.price))
   print("--------------------------------------------------------")
-  print('Sale {} Total {:>30} {:6.2f}'.format(kwargs['sale'], '$', total))
+  print('Sale {} Total {:>30} {:7.2f}'.format(kwargs['sale'], '$', total))
   print("========================================================\n")
 
-def main():
+def bootstrap():
   # The system starts by loading items into an in memory database
   # First is the DB of items for sale
   itemsDB = loadItemsDB()
@@ -72,18 +72,25 @@ def main():
   # This is console driven and would be adapted to do the same in a UI
   screens = loadScreens('data/screens.screen')
 
-  kwargs = {'db' : itemsDB, 'me' : employees[0]}
+  return itemsDB, employees, screens
+
+def main():
+  
+  itemsDB, employees, screens = bootstrap()
+  
   # System loads the main screen and waits for a valid response
   module = 'main'
   loadScreen(screens,module)
   choice = screens[module].getValidChoice()
-  
-  # Sample item lookup
-  itemName, itemPrice = itemLookup(itemsDB,50)
-  print(itemName, itemPrice)
 
   # Simulating a logon
   #me = employees[0]
+
+  kwargs = {'db' : itemsDB, 'me' : employees[0]}
+
+  # Sample item lookup
+  itemName, itemPrice = itemLookup(itemsDB,50)
+  print(itemName, itemPrice)
 
   while choice != 'quit':
   # This needs to be moved to a function that processes responses  
