@@ -1,4 +1,5 @@
 open,Open a new sales ticket
 add,Add an item to an order
 rem,Remove an item from the order
+rev,Review total order
 fin,Complete an order

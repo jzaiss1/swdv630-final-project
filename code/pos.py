@@ -12,50 +12,80 @@ PASSWORD = 'pass'
 def login(employees, id):
   return employee
 
-def processChoice(screens,choice,**kwargs):
-  module = kwargs['me'].access
-  screen = screens[module]
+def processChoice(screens,**kwargs):
+  screen = screens[kwargs['me'].access]
+  loggedIn = '*** {} logged in as {} ***\n'.format(kwargs['me'].id, kwargs['me'].access)
+  checkoutOptions = ['cash','credit','debit']
 
-  if choice == 'in':
+  if kwargs['choice'] == 'in':
     # add a login prompt
-    loadScreen(screens,module)
-    return screen, module, kwargs
+    print(loggedIn)
+    kwargs['module'] = kwargs['me'].access
+    loadScreen(screens, kwargs['module'])
+    return screen, kwargs
 
-  if choice == 'open':
-    print('Opening a ticket')
-    # Call adding to an order function
-    loadScreen(screens,module)
-    kwargs['sale'] = 'abc123'
-    kwargs[kwargs['sale']] = []
-    return screen, module, kwargs
+  if kwargs['choice'] == 'open':
+    print(loggedIn)
+    kwargs['sale'] = Sale()
+    print("********************* Sale {} **********************".format(kwargs['sale'].id))
+    print('{:>3} {:<40}  {}  {}'.format(' ID','Item','Qty','Price'))
+    print("--------------------------------------------------------\n")
+    loadScreen(screens,kwargs['module'])
+    
+    return screen,kwargs
 
-  if choice == 'add':
+  if kwargs['choice'] == 'add':
     id = int(input("Enter item id or 0 to exit "))
     while (id != 0):
       itemName, itemPrice = itemLookup(kwargs['db'],id)
       lineItem = LineItem(id,itemName,itemPrice,1)
-      kwargs[kwargs['sale']].append(lineItem)
+      kwargs['sale'].add(lineItem)
       os.system('clear')
+      print('trying to print order')
       printOrder(**kwargs)
       id = int(input("Enter item id or 0 to exit "))
-    loadScreen(screens,module)
-    return screen, module, kwargs
-
-  if choice == 'fin':
     printOrder(**kwargs)
-    return screen, module, kwargs
+    loadScreen(screens,kwargs['module'])
+    return screen, kwargs
+
+  if kwargs['choice'] == 'rem':
+    print(loggedIn)
+    print("Last item added has been removed")
+    iterator = kwargs['sale'].iterator()
+    iterator.remove()
+    printOrder(**kwargs)
+    loadScreen(screens,kwargs['module'])
+    return screen, kwargs
+
+  if kwargs['choice'] == 'fin':
+    print(loggedIn)
+    printOrder(**kwargs)
+    kwargs['module'] = 'checkout'
+    loadScreen(screens,kwargs['module'])
+    screen = screens[kwargs['module']]
+    return screen,kwargs
+
+  if kwargs['choice'] in checkoutOptions:
+    print('checkout complete...')
+    kwargs['module'] = kwargs['me'].access
+    loadScreen(screens,kwargs['module'])
+    return screen,kwargs
     
 def printOrder(**kwargs):
   print("\n")
-  print("********************* Sale {} **********************".format(kwargs['sale']))
+  print("********************* Sale {} **********************".format(kwargs['sale'].id))
   print('{:>3} {:<40}  {}  {}'.format(' ID','Item','Qty','Price'))
   print("--------------------------------------------------------")
   total = 0
-  for lineItem in kwargs[kwargs['sale']]:
-    total += lineItem.quantity * lineItem.price
-    print('{:3} {:<40} {:3}  ${:5.2f}'.format(lineItem.id,lineItem.name,lineItem.quantity,lineItem.price))
+  
+  iterator = kwargs['sale'].iterator()
+
+  while iterator.has_next():
+    item = iterator.next()
+    total += item.quantity * item.price
+    print('{:3} {:<40} {:3}  ${:5.2f}'.format(item.id,item.name,item.quantity,item.price))
   print("--------------------------------------------------------")
-  print('Sale {} Total {:>30} {:7.2f}'.format(kwargs['sale'], '$', total))
+  print('Sale {} Total {:>30} {:7.2f}'.format(kwargs['sale'].id, '$', total))
   print("========================================================\n\n")
 
 def bootstrap():
@@ -80,22 +110,21 @@ def main():
   itemsDB, employees, screens = bootstrap()
   
   # System loads the main screen and waits for a valid response
-  module = 'main'
-  loadScreen(screens,module)
-  choice = screens[module].getValidChoice()
+  loadScreen(screens,'main')
+  choice = screens['main'].getValidChoice()
 
   # Simulating a logon
   #me = employees[0]
 
-  kwargs = {'db' : itemsDB, 'me' : employees[0]}
+  kwargs = {'db' : itemsDB, 'me' : employees[0], 'module': '', 'choice' : choice}
 
   # Sample item lookup
-  itemName, itemPrice = itemLookup(itemsDB,50)
-  print(itemName, itemPrice)
+  # itemName, itemPrice = itemLookup(itemsDB,50)
+  # print(itemName, itemPrice)
 
   while choice != 'quit':
   # This needs to be moved to a function that processes responses  
-    screen, module, kwargs = processChoice(screens,choice,**kwargs)
-    choice = screen.getValidChoice()
+    screen, kwargs = processChoice(screens,**kwargs)
+    kwargs['choice'] = screen.getValidChoice()
 
 main()

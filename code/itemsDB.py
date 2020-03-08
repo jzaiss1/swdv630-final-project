@@ -2,6 +2,8 @@
 # SWDV 630: OBJECT-ORIENTATED CODING 1W 20/SP1
 # Final Project
 
+import random
+import string
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
@@ -51,8 +53,9 @@ class Sale:
     self.items = []
 
   def createId(self):
+    letters = string.ascii_lowercase
     num = ''.join(random.choice(string.digits) for i in range(3))
-    alpha = ''.join(random.choice(string.letters) for i in range(3))
+    alpha = ''.join(random.choice(letters) for i in range(3))
     id = alpha.upper() + num
     return id
   

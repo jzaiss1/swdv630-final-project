@@ -2,3 +2,4 @@ main,Pos Main,data/main.screen
 admin,PoS Administrator,data/admin.screen
 cashier,Order entry,data/cashier.screen
 inventory,Inventory Management,data/inventory.screen
+checkout,Checkout,data/checkout.screen

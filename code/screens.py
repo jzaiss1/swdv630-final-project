@@ -31,9 +31,15 @@ class Screen():
 
   def printScreen(self):
     os.system('clear')
-    print("********** {} **********".format(self.title))
+    title = "********** {} **********".format(self.title)
+    footer = ''
+    for char in title:
+      footer += '*'
+    footer += '\n\n'
+    print(title)
     for k,v in self.dict.items():
       print("{:<8}{}".format(k,v))
+    print(footer)
 
   def getValidChoice(self):
     # Loop unti a valid choice is made
