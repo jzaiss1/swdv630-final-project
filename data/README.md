@@ -10,5 +10,5 @@ Typically this data would be contained withing a PoS DB, but for this MVP implem
 
 ## Data File Types
 
-* The `*.screen` files contain information to drive the various screens displayed in the console. 
-* the `employees` file is used to simulate the on-boarding of employees.  
+* The `*.screen` files contain information to drive the various screens displayed in the console
+* the `employees` file is used to simulate the on-boarding of employees
