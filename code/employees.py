@@ -59,6 +59,13 @@ class Account():
     else:
       print('invalid password try again')
 
+  def login(self,pass):
+    if self.pass = pass:
+      return True
+    else:
+      print('Wrong Password')
+      return False
+
 def loadEmployees():
   employees = []
   employeeFile = open('data/employees', 'r')

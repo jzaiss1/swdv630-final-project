@@ -31,15 +31,15 @@ class Item(Base):
 
 class OrderIterator:
   def __init__(self, items):
-    self.indx = 0
+    self.index = 0
     self.items = items
 
   def has_next(self):
-    return False if self.indx >= len(self.items) else True
+    return False if self.index >= len(self.items) else True
 
   def next(self):
-    item = self.items[self.indx]
-    self.indx += 1
+    item = self.items[self.index]
+    self.index += 1
     return item
 
   def remove(self):
@@ -47,8 +47,11 @@ class OrderIterator:
 
 class Sale:
   def __init__(self):
+    self.id = self.createId()
     self.items = []
-    self.saleId = ''
+
+  def createId(self):
+    pass
   
   def add(self, item):
     self.items.append(item)
