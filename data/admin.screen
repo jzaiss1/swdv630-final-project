@@ -4,3 +4,4 @@ dep,Create a new department
 upd,Update a department
 item,Create a new item
 upi,Update an item
+out,Log out of the system

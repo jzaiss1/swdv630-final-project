@@ -48,6 +48,32 @@ class Manager(Employee):
     self.access = 'manager'
     self.salary = 10000
 
+class Admin(Employee):
+  def __init__(self, name):
+    super().__init__(name)
+    self.access = 'admin'
+    self.hourlyRate = 15.00
+    self.schedule = []
+
+  def addShift(self, date):
+    pass
+
+  def changeSupervisor(self, manager):
+    pass
+
+class Stocker(Employee):
+  def __init__(self, name):
+    super().__init__(name)
+    self.access = 'stocker'
+    self.hourlyRate = 15.00
+    self.schedule = []
+
+  def addShift(self, date):
+    pass
+
+  def changeSupervisor(self, manager):
+    pass
+
 class Account():
   def __init__(self,id):
     self.id = id
@@ -77,6 +103,12 @@ def loadEmployees():
       created = True
     if row[0] == 'manager':
       employee = Manager(row[1])
+      created = True
+    if row[0] == 'admin':
+      employee = Admin(row[1])
+      created = True
+    if row[0] == 'stocker':
+      employee = Stocker(row[1])
       created = True
     if created:
       employees.append(employee)

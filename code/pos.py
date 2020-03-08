@@ -13,6 +13,7 @@ def login(employees, id):
   return employee
 
 def processChoice(screens,**kwargs):
+  print("\n\n")
   screen = screens[kwargs['me'].access]
   loggedIn = '*** {} logged in as {} ***\n'.format(kwargs['me'].id, kwargs['me'].access)
   checkoutOptions = ['cash','credit','debit']
@@ -35,13 +36,20 @@ def processChoice(screens,**kwargs):
     return screen,kwargs
 
   if kwargs['choice'] == 'add':
+    os.system('clear')
+    print('\n', loggedIn)
+    print("********************* Sale {} **********************".format(kwargs['sale'].id))
+    print('{:>3} {:<40}  {}  {}'.format(' ID','Item','Qty','Price'))
+    print("--------------------------------------------------------\n")
+    itemCount = kwargs['db'].query(Item).count()
+    print('Item ids are 1 to {}'.format(itemCount))
     id = int(input("Enter item id or 0 to exit "))
     while (id != 0):
+      print('\n\nItem ids are 1 to {}'.format(itemCount))
       itemName, itemPrice = itemLookup(kwargs['db'],id)
       lineItem = LineItem(id,itemName,itemPrice,1)
       kwargs['sale'].add(lineItem)
       os.system('clear')
-      print('trying to print order')
       printOrder(**kwargs)
       id = int(input("Enter item id or 0 to exit "))
     printOrder(**kwargs)
@@ -66,9 +74,17 @@ def processChoice(screens,**kwargs):
     return screen,kwargs
 
   if kwargs['choice'] in checkoutOptions:
-    print('checkout complete...')
+    print(loggedIn)
+    print('checkout complete...\n')
     kwargs['module'] = kwargs['me'].access
     loadScreen(screens,kwargs['module'])
+    return screen,kwargs
+
+  if kwargs['choice'] == 'out':
+    print('{} logged out\n'.format(kwargs['me'].id))
+    kwargs['module'] = 'main'
+    loadScreen(screens,kwargs['module'])
+    screen = screens[kwargs['module']]
     return screen,kwargs
     
 def printOrder(**kwargs):
@@ -122,7 +138,7 @@ def main():
   # itemName, itemPrice = itemLookup(itemsDB,50)
   # print(itemName, itemPrice)
 
-  while choice != 'quit':
+  while kwargs['choice'] != 'quit':
   # This needs to be moved to a function that processes responses  
     screen, kwargs = processChoice(screens,**kwargs)
     kwargs['choice'] = screen.getValidChoice()

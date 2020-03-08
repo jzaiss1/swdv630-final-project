@@ -3,3 +3,4 @@ item,Add an item to inventory
 pri,Update a price
 pinv,Print inventory report
 uinv,Update inventory
+out,Log out of the system

@@ -3,3 +3,4 @@ add,Add an item to an order
 rem,Remove an item from the order
 rev,Review total order
 fin,Complete an order
+out,Log out of the system
