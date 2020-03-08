@@ -9,10 +9,8 @@ SWDV 630: OBJECT-ORIENTATED CODING 1W 20/SP1
 * Manager
 * Cashier
 * Customer
-* Prepper
 * PoS Admin
-* Inventory Manager
+* Stock Manager
 * Sales Manager
 * Financial Manager
 
-TODO: Need descriptions for each actor's role

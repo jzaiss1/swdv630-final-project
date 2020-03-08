@@ -1,4 +1,4 @@
-# Codef for Final Project
+# Code for Final Project
 
 John Zaiss (GitHub id jzaiss1)
 
