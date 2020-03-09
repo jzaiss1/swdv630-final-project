@@ -11,13 +11,6 @@ class Screen():
     self.title = title
     self.dict = self.getSelections(fileName)
 
-  # What screens do we need
-    # Main
-    # Cashier
-    # PoS Admin
-    # Sales Manager
-    # Inventory
-
   # Screens are loaded from *.screen files
 
   def getSelections(self,fileName):
@@ -51,19 +44,28 @@ class Screen():
         return choice.lower()       
       print("'{}' is an invalid choice".format(choice))
 
+# Screens are loaded and returned as a dictionary of modules
+# The screens.screen file defines the screen files used for each module
+# The file format is
+  # column 0 = module name
+  # column 1 = display name
+  # column 2 = relative file path
 def loadScreens(fileName):
   screens = {}
   screenFile = open(fileName, 'r')
   reader = csv.reader(screenFile)
+  # Each row in the screen file represents a function that can be called
   for row in reader:
     s = Screen(row[1],row[2])
     screens[row[0]] = s
   return screens
 
+# Used for debugging when creating new screen files
 def printAllScreens(screens):
   for k,v in screens.items():
     print(k)
     v.printScreen()
 
+# This method is called to print the active screen
 def loadScreen(screens,module):
   screens[module].printScreen()

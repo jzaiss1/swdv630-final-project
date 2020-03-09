@@ -32,6 +32,7 @@ class Item(Base):
   def __str__(self):
         return "{}: $ {}".format(self.name, self.price)
 
+# This class is used to iterate through the items in a give order
 class OrderIterator:
   def __init__(self, items):
     self.index = 0
@@ -48,11 +49,14 @@ class OrderIterator:
   def remove(self):
     return self.items.pop()
 
+# Each new order is a sale object
+# Sale objects can be stored in a daily sales object and a customer object
 class Sale:
   def __init__(self):
     self.id = self.createId()
     self.items = []
 
+  # Sale id's are created from random numbers and strings
   def createId(self):
     letters = string.ascii_lowercase
     num = ''.join(random.choice(string.digits) for i in range(3))
@@ -73,6 +77,7 @@ class LineItem:
     self.price = price
     self.quantity = quantity
 
+# This function loads items into an in memory DB to simulate a DB session
 def loadItemsDB():
   print('\nUsing SQLAlchemy version {}\n'.format(sqlalchemy.__version__))
   engine = create_engine('sqlite:///:memory:', echo=False)
@@ -227,6 +232,7 @@ def loadItemsDB():
 
   return session
 
+# Used to find a single item in the DB
 def itemLookup(session,id):
   record = session.query(Item).filter(Item.id == id).all()
   return record[0].name, record[0].price

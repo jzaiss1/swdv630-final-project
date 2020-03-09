@@ -12,19 +12,23 @@ PASSWORD = 'pass'
 def login(employees, id):
   return employee
 
+# This function drives the PoS system by processing selections made from the various screens
+# This is a console driven system but can be easily adapted to a UI by returning the same strings
+# form onClick() or onPress() funtions in a UI
 def processChoice(screens,**kwargs):
   print("\n\n")
   screen = screens[kwargs['me'].access]
   loggedIn = '*** {} logged in as {} ***\n'.format(kwargs['me'].id, kwargs['me'].access)
   checkoutOptions = ['cash','credit','debit']
 
+  # Logging in functionality
   if kwargs['choice'] == 'in':
-    # add a login prompt
     print(loggedIn)
     kwargs['module'] = kwargs['me'].access
     loadScreen(screens, kwargs['module'])
     return screen, kwargs
-
+  
+  # Opening a new ticket functionality
   if kwargs['choice'] == 'open':
     print(loggedIn)
     kwargs['sale'] = Sale()
@@ -32,9 +36,9 @@ def processChoice(screens,**kwargs):
     print('{:>3} {:<40}  {}  {}'.format(' ID','Item','Qty','Price'))
     print("--------------------------------------------------------\n")
     loadScreen(screens,kwargs['module'])
-    
     return screen,kwargs
 
+  # Adding items to an order functionality
   if kwargs['choice'] == 'add':
     os.system('clear')
     print('\n', loggedIn)
@@ -44,6 +48,7 @@ def processChoice(screens,**kwargs):
     itemCount = kwargs['db'].query(Item).count()
     print('Item ids are 1 to {}'.format(itemCount))
     id = int(input("Enter item id or 0 to exit "))
+    # Optimize the experiece to eliminate the need to use add from a menu to add a new item each time
     while (id != 0):
       print('\n\nItem ids are 1 to {}'.format(itemCount))
       itemName, itemPrice = itemLookup(kwargs['db'],id)
@@ -56,6 +61,7 @@ def processChoice(screens,**kwargs):
     loadScreen(screens,kwargs['module'])
     return screen, kwargs
 
+  # Removing an item functionality
   if kwargs['choice'] == 'rem':
     print(loggedIn)
     print("Last item added has been removed")
@@ -65,14 +71,17 @@ def processChoice(screens,**kwargs):
     loadScreen(screens,kwargs['module'])
     return screen, kwargs
 
+  # Completing the order functionality
   if kwargs['choice'] == 'fin':
     print(loggedIn)
     printOrder(**kwargs)
+    # Change the module to checkout to add checkout options to the screen
     kwargs['module'] = 'checkout'
     loadScreen(screens,kwargs['module'])
     screen = screens[kwargs['module']]
     return screen,kwargs
 
+  # Payment options functionality
   if kwargs['choice'] in checkoutOptions:
     print(loggedIn)
     print('checkout complete...\n')
@@ -80,6 +89,7 @@ def processChoice(screens,**kwargs):
     loadScreen(screens,kwargs['module'])
     return screen,kwargs
 
+  # Logout functionality
   if kwargs['choice'] == 'out':
     print('{} logged out\n'.format(kwargs['me'].id))
     kwargs['module'] = 'main'
@@ -115,7 +125,7 @@ def bootstrap():
   # The employees are used to create a list of login accounts
   # This is simulated, typically this would be in an identity management service
 
-  # The system creates a dictionary of sceens to display
+  # The system creates a dictionary of screens to display
   # This is console driven and would be adapted to do the same in a UI
   screens = loadScreens('data/screens.screen')
 
@@ -129,17 +139,9 @@ def main():
   loadScreen(screens,'main')
   choice = screens['main'].getValidChoice()
 
-  # Simulating a logon
-  #me = employees[0]
-
   kwargs = {'db' : itemsDB, 'me' : employees[0], 'module': '', 'choice' : choice}
 
-  # Sample item lookup
-  # itemName, itemPrice = itemLookup(itemsDB,50)
-  # print(itemName, itemPrice)
-
   while kwargs['choice'] != 'quit':
-  # This needs to be moved to a function that processes responses  
     screen, kwargs = processChoice(screens,**kwargs)
     kwargs['choice'] = screen.getValidChoice()
 

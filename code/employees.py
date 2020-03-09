@@ -6,6 +6,7 @@ import random
 import string
 import csv
 
+# This is our base employee class
 class Employee():
   def __init__(self, name):
     self.id = self.generateId(name)
@@ -15,6 +16,7 @@ class Employee():
     self.ssn = ""
     self.active = True
 
+  # Employee ids are generated with the first three characters of the name and a random three digits
   def generateId(self, name):
     id = name[0:3].lower() + '-' + ''.join(random.choice(string.digits) for i in range(3))
     return id
@@ -29,6 +31,8 @@ class Employee():
   def getId(self):
     return self.id
 
+# Each employee type has a distnc class
+# This can allow for handling different levels of functionality in the system
 class Cashier(Employee):
   def __init__(self, name):
     super().__init__(name)
@@ -74,6 +78,8 @@ class Stocker(Employee):
   def changeSupervisor(self, manager):
     pass
 
+# An Account object is used for signing into the system and is created
+# at the time an employee is created
 class Account():
   def __init__(self,id):
     self.id = id
@@ -92,6 +98,7 @@ class Account():
       print('Wrong Password')
       return False
 
+# This is our object factory that allows us to create each type of employee
 def loadEmployees():
   employees = []
   employeeFile = open('data/employees', 'r')
